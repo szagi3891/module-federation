@@ -1,27 +1,19 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-// import Content from "./Content";
+import { App } from "./App";
 
-const App = () => {
-    return (
-        <div>
-            to jest App ...
-        </div>
-    );
-};
+// class AAAA {
+//     constructor(private readonly value: string) {
+//     }
 
-class AAAA {
-    constructor(private readonly value: string) {
-    }
+//     ccc = (arg: string) => {
+//         console.info(`${this.value} odpalam ccc, arg=${arg}`);
+//     }
+// }
 
-    ccc = (arg: string) => {
-        console.info(`${this.value} odpalam ccc, arg=${arg}`);
-    }
-}
-
-const aaaa = new AAAA('zmienna prywatna');
-const ccc = aaaa.ccc;
-ccc('parametr jakis');
+// const aaaa = new AAAA('zmienna prywatna');
+// const ccc = aaaa.ccc;
+// ccc('parametr jakis');
 
 const root = document.getElementById("root");
 

@@ -1,6 +1,7 @@
 //@ts-check
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const resolve_config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
@@ -52,10 +53,11 @@ module.exports = {
     module: module_config,
     output: {
         path: path.resolve(__dirname, "./dist/client"),
-        filename: "[name].js",
-        chunkFilename: "[name].js",
+        filename: "[name].[hash].js",
+        chunkFilename: "[name].[hash].js",
     },
     plugins: [
+        new CleanWebpackPlugin({ verbose: true }),
         new HtmlWebPackPlugin({
             template: "./src/index.html",
         }),
@@ -69,7 +71,7 @@ module.exports = {
     },
 };
 
-// publicPath: "http://localhost:3000/static/",
-//   plugins: [
-//     moduleFederationPlugin.client,
-//   ],
+//  publicPath: "http://localhost:3000/static/",
+//  plugins: [
+//      moduleFederationPlugin.client,
+//  ],
