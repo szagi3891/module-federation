@@ -22,7 +22,11 @@ if (root === null) {
     console.error('Brak root');
 } else {
     ReactDOM
-        .hydrateRoot(root, <App />)
+        .hydrateRoot(root, (
+            // <React.StrictMode>
+                <App />
+            // </React.StrictMode>
+        ))
         // .createRoot(root).render(<App />)
     ;
     // ReactDOM.render(<App />, root);

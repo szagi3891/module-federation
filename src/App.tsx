@@ -10,14 +10,14 @@ const timeout = (time: number): Promise<void> => {
 
 const AppHeader = React.lazy(async () => {
     console.info("AppHeader - rozpoczynam ładowanie");
-    await timeout(2000);
+    await timeout(5000);
     console.info("AppHeader - rozpoczynam ładowanie");
     return import('./AppHeader');
 });
 
 const AppFooter = React.lazy(async () => {
     console.info("AppFooter - rozpoczynam ładowanie");
-    await timeout(2000);
+    await timeout(5000);
     console.info("AppFooter - rozpoczynam ładowanie");
     return import('./AppFooter');
 });
@@ -25,11 +25,17 @@ const AppFooter = React.lazy(async () => {
 
 class State {
     @observable show: boolean = false;
+    @observable counter: number = 0;
 
     public triggerShow = () => {
         console.info('trigger show');
 
         this.show = true;
+    }
+
+    public counterUp = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        this.counter++;
     }
 }
 
@@ -43,7 +49,12 @@ export const App = observer(() => {
                 <Suspense fallback={<div>Loading...</div>}>
                     <AppHeader />
                 </Suspense>
-            ) : null }
+            ) : (
+                <div>
+                    hide ...
+                </div>
+            )}
+            <div onClick={state.counterUp}>tutaj jest jakis licznik = {state.counter}</div>
             <Suspense fallback={<div>Loading...</div>}>
                 <AppFooter />
             </Suspense>
