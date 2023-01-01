@@ -1,4 +1,8 @@
 
+//TODO - zaktualizować Resource w website
+//TODO - Zrobić szkielet stora spinającego. Tego który będzie operował tylko na dynamicznych importach
+
+
 komunikacja z innymi mikrofrontami, moze odbywać się za pomocą webpack module federation
 
 mikrofronty inne, nie muszą obsługiwać SSR. Wystarczy ze będa działały tylko w trybie dev-servera webpackowego
