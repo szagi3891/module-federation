@@ -83,5 +83,16 @@ function App() {
 }
 ```
 
+--------
 
+```
+https://reactjs.org/docs/code-splitting.html#reactlazy
+https://reactjs.org/docs/react-dom-server.html#rendertopipeablestream
+```
+
+
+Nodejs który natywnie wspiera fetch
+```
+https://blog.logrocket.com/fetch-api-node-js/
+```
 
