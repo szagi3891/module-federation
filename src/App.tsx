@@ -1,3 +1,5 @@
+import { observable } from "mobx";
+import { observer } from "mobx-react-lite";
 import React, { Suspense } from "react";
 
 const timeout = (time: number): Promise<void> => {
@@ -13,17 +15,27 @@ const AppHeader = React.lazy(async () => {
     return import('./AppHeader');
 });
 
-export const App = () => {
-    const [show, setShow] = React.useState(false);
+class State {
+    @observable show: boolean = false;
+
+    public triggerShow = () => {
+        console.info('trigger show');
+
+        this.show = true;
+    }
+}
+
+export const App = observer(() => {
+    const [state] = React.useState(() => new State());
 
     return (
         <div>
-            <div onClick={() => setShow(true)}>to jest App ... --- pokaz</div>
-            { show ? (
+            <div onClick={state.triggerShow}>to jest App ... --- pokaz</div>
+            { state.show ? (
                 <Suspense fallback={<div>Loading...</div>}>
                     <AppHeader />
                 </Suspense>
             ) : null }
         </div>
     );
-};
+});
