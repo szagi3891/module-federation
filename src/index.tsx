@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { App } from "./App";
 // import { renderToNodeStream, renderToPipeableStream, renderToReadableStream, renderToString} from 'react-dom/server';
 
@@ -21,8 +21,14 @@ const root = document.getElementById("root");
 if (root === null) {
     console.error('Brak root');
 } else {
-    ReactDOM.render(<App />, root);
+    ReactDOM
+        .hydrateRoot(root, <App />)
+        // .createRoot(root).render(<App />)
+    ;
+    // ReactDOM.render(<App />, root);
 }
+
+
 
 //TODO - zrobić test, spróbować wyrenderować <App/> z jakimś lazy-loadingiem, i sprawdzić w jakiej formie wygeneruje się wynikowy html
 
@@ -42,3 +48,35 @@ if (root === null) {
 //         console.info('end ... ', args);
 //     }
 // });
+
+
+/*
+
+    pobieranie propsa pomiędzy storami
+
+    getValue = ():  => {
+
+        //import leniwy
+
+        zwrócenie wartości
+
+    }
+
+*/
+
+
+
+
+/*
+obsługa wszystkich requestów wychodzących
+
+Reac.lazy(() => Promise<PystyKomponent>)
+
+w momencie gdy wszystkie requesty będą kompletne, to wtedy rozwiązywać tego promisa
+będzie to sygnał dla SSR ze odpowiedz jest gotowa do wysłania
+
+
+tylko czy włozenie danych do stanu, spowoduje rzeczywiscie ze otrzymamy inny widok przy kolejnym cyklu renderowania po stronie serwera ?
+*/
+
+

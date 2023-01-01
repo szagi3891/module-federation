@@ -15,6 +15,14 @@ const AppHeader = React.lazy(async () => {
     return import('./AppHeader');
 });
 
+const AppFooter = React.lazy(async () => {
+    console.info("AppFooter - rozpoczynam ładowanie");
+    await timeout(2000);
+    console.info("AppFooter - rozpoczynam ładowanie");
+    return import('./AppFooter');
+});
+
+
 class State {
     @observable show: boolean = false;
 
@@ -36,6 +44,9 @@ export const App = observer(() => {
                     <AppHeader />
                 </Suspense>
             ) : null }
+            <Suspense fallback={<div>Loading...</div>}>
+                <AppFooter />
+            </Suspense>
         </div>
     );
 });

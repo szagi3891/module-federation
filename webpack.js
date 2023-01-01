@@ -5,6 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const resolve_config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    alias: {
+        src: path.join(__dirname, 'src'),
+        server: path.join(__dirname, 'server'),
+    },
 };
 
 const getBabelConfig = () => ({
@@ -43,7 +47,7 @@ const module_config = {
     }],
 };
 
-module.exports = {
+module.exports = [{
     name: "client",
     target: "web",
     entry: path.resolve(__dirname, "./src/index.tsx"),
@@ -53,7 +57,8 @@ module.exports = {
     module: module_config,
     output: {
         path: path.resolve(__dirname, "./dist/client"),
-        filename: "[name].[hash].js",
+        // filename: "[name].[hash].js",
+        filename: "[name].js",
         chunkFilename: "[name].[hash].js",
     },
     plugins: [
@@ -69,7 +74,20 @@ module.exports = {
         compress: true,
         port: 9000,
     },
-};
+}, {
+    name: "server",
+    target: "node",
+    entry: path.resolve(__dirname, "./server/server.tsx"),
+    mode: "production",
+    devtool: "source-map",
+    resolve: resolve_config,
+    module: module_config,
+    output: {
+        path: path.resolve(__dirname, "./dist/server"),
+        filename: "[name].js",
+        chunkFilename: "[name].[hash].js",
+    },
+}];
 
 //  publicPath: "http://localhost:3000/static/",
 //  plugins: [
