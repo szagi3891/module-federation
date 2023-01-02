@@ -2,6 +2,35 @@
 //TODO - zaktualizować Resource w website
 //TODO - Zrobić szkielet stora spinającego. Tego który będzie operował tylko na dynamicznych importach
 
+```
+//Kesz na promisa.
+
+const Router 
+
+const getCasino = async () => {
+    const Store = await import('mikro/domena1/Store');
+
+    const store = new Store({
+        jakasAkcja: async (betId: number) => {
+            const sportsbook = await getDomena2();
+            sportsbook.jakasAkcja('betId')
+        },
+        // getCurrentCasinoBalance => number
+    });
+
+    return store;
+}
+
+const getDomena2 = async () => {
+    const Store = await import('mikro/domena2/Store');
+
+    const store = new Store({
+
+    });
+
+    return store;
+}
+```
 
 komunikacja z innymi mikrofrontami, moze odbywać się za pomocą webpack module federation
 
