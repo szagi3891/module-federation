@@ -2,7 +2,7 @@ import React from 'react';
 import { PipeableStream, renderToPipeableStream } from 'react-dom/server';
 import { Writable } from 'stream';
 
-const streamToString = (stream: PipeableStream, resolve: (response: string) => void) => {
+const streamToString = (stream: PipeableStream, resolve: (response: string) => void): void => {
     const { pipe } = stream;
 
     const result: Array<string> = [];
