@@ -4,6 +4,15 @@ import { Value } from "./Value";
 
 type State<T> = null | { type: 'ready', value: T };
 
+/*
+//Przykładowe uzycie
+
+const lazyInstancja = LazyStore.create(() => import('/sciezka/do/klasy'), {
+    a: 1,
+    b: 2
+});
+*/
+
 export class LazyStore<T> {
     private readonly getStoreClass: () => Promise<T>;
     @observable private state: Value<State<T>>;
@@ -30,14 +39,8 @@ export class LazyStore<T> {
         this.getStoreClass =  getStoreClass;
     }
 
-    public create<P>(getStoreClass: (params: P) => Promise<(params: P) => T>): ((params: P) => LazyStore<T>) {        
-        const buildLazyStore: (params: P) => Promise<T> = (params: P): Promise<T> => {
-            return getStoreClass(params).then((build) => build(params));
-        };
-
-        return (params: P): LazyStore<T> => {
-            return new LazyStore(() => buildLazyStore(params));
-        };
+    public create<P>(getStoreClass: () => Promise<(params: P) => T>, params: P): LazyStore<T> {        
+        return new LazyStore(() => getStoreClass().then((build) => build(params)));
     }
 
     public async getAsync(): Promise<T> {
