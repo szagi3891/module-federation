@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { observable, makeObservable } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { Suspense } from "react";
 import List from './List';
@@ -48,6 +48,10 @@ class State {
         e.preventDefault();
         this.counter++;
     }
+
+    constructor() {
+        makeObservable(this);
+    }
 }
 
 export const App = observer(() => {
@@ -65,7 +69,9 @@ export const App = observer(() => {
             )}
             <div onClick={state.counterUp}>tutaj jest jakis licznik = {state.counter}</div>
             <Suspense fallback={<div>Loading list ...</div>}>
-                <List />
+                <Suspense fallback={<div>Loading list 2 ...</div>}>
+                    <List />
+                </Suspense>
             </Suspense>
             <Suspense fallback={<div>Loading app footer ...</div>}>
                 <AppFooter />

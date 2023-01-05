@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, makeObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
@@ -8,6 +8,10 @@ import * as React from 'react';
 
 class State {
     @observable counter: number = 0;
+
+    constructor() {
+        makeObservable(this);
+    }
 }
 
 const AppFooter = observer(() => {
