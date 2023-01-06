@@ -14,7 +14,7 @@ const lazyInstancja = LazyStore.create(() => import('/sciezka/do/klasy'), {
 
 export class LazyStore<T> {
     private readonly getStoreClass: () => Promise<T>;
-    private state: Value<State<T>>;
+    private readonly state: Value<State<T>>;
     private stateAsync: null | Promise<T> = null;
 
     private constructor(getStoreClass: () => Promise<T>) {
