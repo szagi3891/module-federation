@@ -14,8 +14,13 @@ class State {
     }
 }
 
-const AppFooter = observer(() => {
+interface PropsType {
+    label: string,
+}
+
+const AppFooter = observer((props: PropsType) => {
     const [state] = React.useState(() => new State());
+    const { label } = props;
 
     // const message = isServer() ? "na serwerze" : "przeglądarka";
 
@@ -33,7 +38,7 @@ const AppFooter = observer(() => {
 
     return (
         <div>
-            <div>AppFooter, counter = {state.counter}</div>
+            <div>AppFooter, counter = {state.counter} label = {label} </div>
             {/* <div>{ message }</div> */}
         </div>
     )

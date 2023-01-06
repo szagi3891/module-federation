@@ -77,7 +77,7 @@ export const App = observer(() => {
                 </Suspense>
             </Suspense>
             <Suspense fallback={<div>Loading app footer ...</div>}>
-                <AppFooter />
+                <AppFooter label="testowy label" />
             </Suspense>
             <Suspense fallback={<div>Ładowanie równoległych komponentów ----- fallback </div>}>
                 <LazyParallel />
