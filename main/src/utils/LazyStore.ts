@@ -1,4 +1,3 @@
-import { makeObservable, observable } from "mobx";
 import { timeout } from "./timeout";
 import { Value } from "./Value";
 
@@ -15,11 +14,10 @@ const lazyInstancja = LazyStore.create(() => import('/sciezka/do/klasy'), {
 
 export class LazyStore<T> {
     private readonly getStoreClass: () => Promise<T>;
-    @observable private state: Value<State<T>>;
+    private state: Value<State<T>>;
     private stateAsync: null | Promise<T> = null;
 
     private constructor(getStoreClass: () => Promise<T>) {
-        makeObservable(this);
         this.state = new Value<State<T>>(null, (setValue) => {
             if (this.stateAsync === null) {
                 const statePromise = this.getAsync();
