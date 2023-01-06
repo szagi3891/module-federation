@@ -28,22 +28,20 @@ const send = <T>(loadValue: () => Promise<T>): Promise<Result<T>> => {
             });
         }, TIMEOUT);
 
-        // setTimeout(async () => {
-            try {
-                const loadedValue = await loadValue();
+        try {
+            const loadedValue = await loadValue();
 
-                resolve({
-                    type: 'ready',
-                    value: loadedValue,
-                });
-            } catch (err) {
-                console.error(err);
+            resolve({
+                type: 'ready',
+                value: loadedValue,
+            });
+        } catch (err) {
+            console.error(err);
 
-                resolve({
-                    type: 'error'
-                });
-            }
-        // }, 0);
+            resolve({
+                type: 'error'
+            });
+        }
     })
 }
 
@@ -67,7 +65,7 @@ class Request<T> {
 
         setTimeout(async () => {
             const value = await valuePromise;
-            this.value.setValue(value, true);
+            this.value.setValue(value);
             whenReady.resolve();
         }, 0);
     }

@@ -35,17 +35,8 @@ export class Value<T> {
         }
     }
 
-    public setValue(value: T, reportChangedInNextTick?: boolean) {
+    public setValue(value: T) {
         this.value = value;
-
-        if (reportChangedInNextTick === true) {
-            setTimeout(() => {
-                this.atom.reportChanged();
-            }, 0);
-
-            return;
-        }
-
         this.atom.reportChanged();
     }
 
