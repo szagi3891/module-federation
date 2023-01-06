@@ -13,6 +13,8 @@ interface Post {
     body: string
 }
 
+console.info('Buduję obiekt RESOURCE');
+
 const list = new Resource(async () => {
     console.info('fetch 1 ...');
     const response = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -25,10 +27,10 @@ const list = new Resource(async () => {
 
 export default observer(() => {
     const data = list.get();
-    console.info('data 1111 --->');
+    console.info('LIST RENDER');
 
     if (data.type === 'loading') {
-        console.info('LOADING w komponencie');
+        console.info('LIST LOADING');
         throw data.whenReady;
     }
 

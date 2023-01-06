@@ -1,6 +1,7 @@
 import { observable, makeObservable } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { Suspense } from "react";
+import { LazyParallel } from "./LazyParallel";
 import List from './List';
 import { timeout } from "./utils/timeout";
 
@@ -57,6 +58,8 @@ class State {
 export const App = observer(() => {
     const [state] = React.useState(() => new State());
 
+    console.info('Render APP');
+
     return (
         <div>
             <div onClick={state.triggerShow}>to jest App ... --- pokaz</div>
@@ -75,6 +78,9 @@ export const App = observer(() => {
             </Suspense>
             <Suspense fallback={<div>Loading app footer ...</div>}>
                 <AppFooter />
+            </Suspense>
+            <Suspense fallback={<div>Ładowanie równoległych komponentów ----- fallback </div>}>
+                <LazyParallel />
             </Suspense>
         </div>
     );

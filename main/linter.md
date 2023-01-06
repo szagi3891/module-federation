@@ -1,0 +1,1 @@
+jeśli klasa zawiera dekoratory z mobx, sprawdzać czy konstruktor posiada metodę makeObservable(this)

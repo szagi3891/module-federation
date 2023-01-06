@@ -1,3 +1,4 @@
+import { PromiseBox } from "./PromiseBox";
 import { Value } from "./Value";
 
 const TIMEOUT = 10000;
@@ -20,14 +21,14 @@ export type Result<T> = ResultLoading | ResultReady<T> | ResultError;
 
 
 const send = <T>(loadValue: () => Promise<T>): Promise<Result<T>> => {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         setTimeout(() => {
             resolve({
                 type: 'error'
             });
         }, TIMEOUT);
 
-        setTimeout(async () => {
+        // setTimeout(async () => {
             try {
                 const loadedValue = await loadValue();
 
@@ -42,7 +43,7 @@ const send = <T>(loadValue: () => Promise<T>): Promise<Result<T>> => {
                     type: 'error'
                 });
             }
-        }, 0);
+        // }, 0);
     })
 }
 
@@ -56,7 +57,8 @@ class Request<T> {
 
         const valuePromise = send(getValue);
 
-        this.whenReady = valuePromise.then(() => {});
+        const whenReady = new PromiseBox<void>();
+        this.whenReady = whenReady.promise;
 
         this.value = new Value({
             type: 'loading',
@@ -65,7 +67,8 @@ class Request<T> {
 
         setTimeout(async () => {
             const value = await valuePromise;
-            this.value.setValue(value);
+            this.value.setValue(value, true);
+            whenReady.resolve();
         }, 0);
     }
 
