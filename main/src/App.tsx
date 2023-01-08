@@ -60,24 +60,22 @@ export const App = observer(() => {
 
     console.info('Render APP');
 
+    //TODO - co jeśli fallback, będzie uzywał withConfig ? Pierwszy mechanizm hydracji, powinien równie poczekać na gotowość tego elementu. Trzeba to jakoś sprawdzić lub znaleźć sposób jak to ograć
+
     return (
         <div>
-            <div onClick={state.triggerShow}>to jest App ... --- pokaz</div>
-            { state.show ? (
-                <AppHeaderWrapper />
-            ) : (
-                <div>
-                    hide ...
-                </div>
-            )}
-            <div onClick={state.counterUp}>tutaj jest jakis licznik = {state.counter}</div>
-            <Suspense fallback={<div>Loading list ...</div>}>
+            <Suspense fallback={<div>Loading ...</div>}>
+                { state.show ? (
+                    <AppHeaderWrapper />
+                ) : (
+                    <div onClick={state.triggerShow}>
+                        --- header ukryty - kliknij zeby pokazac ---
+                    </div>
+                )}
+                <div onClick={state.counterUp}>tutaj jest jakis licznik = {state.counter}</div>
                 <List />
-            </Suspense>
-            <Suspense fallback={<div>Loading app footer ...</div>}>
+            
                 <AppFooter label="testowy label" />
-            </Suspense>
-            <Suspense fallback={<div>Ładowanie równoległych komponentów ----- fallback </div>}>
                 <LazyParallel />
             </Suspense>
         </div>
