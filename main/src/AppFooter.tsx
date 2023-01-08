@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { observable, makeObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { withConfig } from './Config';
+import { withConfig } from './utils/Config';
 
 const Wrapper = withConfig(config => styled('div')`
     background-color: ${config.footerColor};

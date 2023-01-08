@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withConfig } from './Config';
+import { withConfig } from './utils/Config';
 
 const AppHeader = withConfig(config => (props) => {
     const name = config.name;
