@@ -31,6 +31,21 @@ app.use('/client', express.static("./dist/client"));
 
     console.info('aaa', aaa);
 
+    app.get('config.json', (req, res) => {
+        const config = {
+            name: "Fajny tyruł storny",
+            'background-color': "green",
+        };
+
+        const configJson = JSON.stringify(config);
+
+        //TODO - potrzebny nagłówek json
+        // res.setHeader('Content-type', 'text/html');
+
+        res.write(configJson);
+        res.end();
+    });
+
     app.get('*', (req, res) => {
         
         (async () => {

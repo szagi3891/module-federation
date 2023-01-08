@@ -60,7 +60,7 @@ class Request<T> {
 
         this.value = new Value({
             type: 'loading',
-            whenReady: this.whenReady
+            whenReady: whenReady.promise
         });
 
         setTimeout(async () => {

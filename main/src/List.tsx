@@ -1,10 +1,15 @@
+import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { withConfig } from './Config';
 import { Resource } from './utils/Resource';
-import { timeout } from './utils/timeout';
 // import { timeout } from './utils/timeout';
 
 //https://jsonplaceholder.typicode.com/posts
+
+const ListItem = withConfig(config => styled('div')`
+    background-color: ${config.backgroundColor};  
+`);
 
 interface Post {
     userId: number,
@@ -19,7 +24,7 @@ const list = new Resource(async () => {
     console.info('fetch 1 ...');
     const response = await fetch('https://jsonplaceholder.typicode.com/posts');
     console.info('fetch 2 ...');
-    await timeout(5000);
+    // await timeout(5000);
     const json: Array<Post> = await response.json();
     console.info('fetch 3 ...');
     return json;
@@ -27,10 +32,8 @@ const list = new Resource(async () => {
 
 export default observer(() => {
     const data = list.get();
-    console.info('LIST RENDER');
 
     if (data.type === 'loading') {
-        console.info('LIST LOADING');
         throw data.whenReady;
     }
 
@@ -39,9 +42,9 @@ export default observer(() => {
 
         for (const post of data.value) {
             result.push((
-                <div key={post.id}>
+                <ListItem key={post.id}>
                     { post.id } - { post.title }
-                </div>
+                </ListItem>
             ));
         }
         

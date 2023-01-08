@@ -1,6 +1,12 @@
+import styled from '@emotion/styled';
 import { observable, makeObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+import { withConfig } from './Config';
+
+const Wrapper = withConfig(config => styled('div')`
+    background-color: ${config.footerColor};
+`);
 
 // const isServer = (): boolean => {
 //     return typeof window === 'undefined';
@@ -37,10 +43,10 @@ const AppFooter = observer((props: PropsType) => {
     }, []);
 
     return (
-        <div>
+        <Wrapper>
             <div>AppFooter, counter = {state.counter} label = {label} </div>
             {/* <div>{ message }</div> */}
-        </div>
+        </Wrapper>
     )
 });
 

@@ -72,9 +72,7 @@ export const App = observer(() => {
             )}
             <div onClick={state.counterUp}>tutaj jest jakis licznik = {state.counter}</div>
             <Suspense fallback={<div>Loading list ...</div>}>
-                <Suspense fallback={<div>Loading list 2 ...</div>}>
-                    <List />
-                </Suspense>
+                <List />
             </Suspense>
             <Suspense fallback={<div>Loading app footer ...</div>}>
                 <AppFooter label="testowy label" />

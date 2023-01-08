@@ -23,7 +23,7 @@ export class PromiseBox<T> {
             throw Error('createPromiseValue - reject is null');
         }
 
-        this.resolve = reject;
+        this.resolve = resolve;
         this.reject = reject;
     }
 }
