@@ -39,7 +39,7 @@ const config = new Resource(async (): Promise<ConfigType> => {
 
 type ComponentType<PropsType> = (props: PropsType) => React.ReactElement | null;
 
-export const withConfig = <PropsType>(buildComponent: (c: ConfigType) => ComponentType<PropsType>): ComponentType<PropsType> => {
+export const withConfig = <PropsType extends {}>(buildComponent: (c: ConfigType) => ComponentType<PropsType>): ComponentType<PropsType> => {
     return observer((props: PropsType) => {
         const result = config.get();
 
@@ -53,7 +53,6 @@ export const withConfig = <PropsType>(buildComponent: (c: ConfigType) => Compone
             const Component = buildComponent(config);
 
             return React.createElement(
-                //@ts-expect-error
                 Component,
                 props,
             );

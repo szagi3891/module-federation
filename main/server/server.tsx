@@ -1,7 +1,7 @@
 import React from 'react';
 import express from 'express';
 import { App } from 'src/App';
-import fs from 'fs';
+// import fs from 'fs';
 import { renderToString } from './renderToString';
 
 // const express = require('express');
@@ -25,28 +25,28 @@ app.use('/client', express.static("./dist/client"));
 // });
 
 (async () => {
-    const content = await fs.promises.readFile("dist/client/index.html");
+    // const content = await fs.promises.readFile("dist/client/index.html");
 
-    const aaa = content.toString();
+    // const aaa = content.toString();
 
-    console.info('aaa', aaa);
+    // console.info('aaa', aaa);
 
-    app.get('config.json', (req, res) => {
-        const config = {
-            name: "Fajny tyruł storny",
-            'background-color': "green",
-        };
+    // app.get('config.json', (req, res) => {
+    //     const config = {
+    //         name: "Fajny tyruł storny",
+    //         'background-color': "green",
+    //     };
 
-        const configJson = JSON.stringify(config);
+    //     const configJson = JSON.stringify(config);
 
-        //TODO - potrzebny nagłówek json
-        // res.setHeader('Content-type', 'text/html');
+    //     //TODO - potrzebny nagłówek json
+    //     // res.setHeader('Content-type', 'text/html');
 
-        res.write(configJson);
-        res.end();
-    });
+    //     res.write(configJson);
+    //     res.end();
+    // });
 
-    app.get('*', (req, res) => {
+    app.get('*', (_req, res) => {
         
         (async () => {
             const result = await renderToString(<App />);
