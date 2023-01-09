@@ -16,7 +16,7 @@ const config = new Resource(async (): Promise<ConfigType> => {
     // const json = await response.json();
     // console.info('response z configiem', json);
 
-    await timeout(5000);
+    await timeout(2000);
 
     console.info('ZAŁADOWANO KONFIGURACJĘ ...');
 
@@ -40,7 +40,7 @@ const config = new Resource(async (): Promise<ConfigType> => {
 type ComponentType<PropsType> = (props: PropsType) => React.ReactElement | null;
 
 export const withConfig = <PropsType extends {}>(buildComponent: (c: ConfigType) => ComponentType<PropsType>): ComponentType<PropsType> => {
-    return observer((props: PropsType) => {
+    return observer(function withConfig(props: PropsType) {
         const result = config.get();
 
         if (result.type === 'loading') {
