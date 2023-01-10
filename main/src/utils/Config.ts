@@ -9,8 +9,6 @@ export interface ConfigType {
     'footerColor': string,
 }
 
-//TODO - wyniesc do api zewnętrznego
-
 const config = new Resource(async (): Promise<ConfigType> => {
     // const response = await fetch('/config.json');
     // const json = await response.json();
@@ -36,11 +34,35 @@ const config = new Resource(async (): Promise<ConfigType> => {
 // const Header = withConfig(config => styled('div')`
 //     font-size: ${config.name}
 // `);
+const computedWithCache = <P, R>(computedResult: (params: P) => R): ((params: P) => R) => {
+    let cache: null | [P, R] = null;
+
+    return (params: P): R => {
+        if (cache === null) {
+            const result = computedResult(params);
+            cache = [params, result];
+            return result;
+        }
+
+        const [oldParams, oldResult] = cache;
+
+        if (oldParams === params) {
+            return oldResult;
+        }
+
+        const result = computedResult(params);
+        cache = [params, result];
+        return result;
+    };
+};
 
 type ComponentType<PropsType> = (props: PropsType) => React.ReactElement | null;
 
 export const withConfig = <PropsType extends {}>(buildComponent: (c: ConfigType) => ComponentType<PropsType>): ComponentType<PropsType> => {
-    return observer(function withConfig(props: PropsType) {
+
+    const cacheBuildComponent = computedWithCache(buildComponent);
+
+    return observer((props: PropsType) => {
         const result = config.get();
 
         if (result.type === 'loading') {
@@ -50,7 +72,7 @@ export const withConfig = <PropsType extends {}>(buildComponent: (c: ConfigType)
         if (result.type === 'ready') {
             const config: ConfigType = result.value;
 
-            const Component = buildComponent(config);
+            const Component = cacheBuildComponent(config);
 
             return React.createElement(
                 Component,
