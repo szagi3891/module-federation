@@ -2,13 +2,15 @@ import * as React from 'react';
 import { observer } from "mobx-react-lite";
 import { timeout } from "./utils/timeout";
 import { makeObservable, observable } from 'mobx';
+import { ReactLazy } from "./utils/LazyComponent";
 
-const buildComponent = (label: string, timeoutValue: number) => React.lazy(async () => {
+const buildComponent = (label: string, timeoutValue: number) => ReactLazy(async () => {
     console.info(`${label} -> rozpoczynam ładowanie`);
     await timeout(timeoutValue);
     console.info(`${label} -> uruchamiam`);
     
-    return import('./LazyParallelOne');
+    const com = await import('./LazyParallelOne');
+    return com.default;
 });
 
 const Component1 = buildComponent('komponent1', 3000);
