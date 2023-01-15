@@ -1,5 +1,6 @@
 import { PromiseBox } from './PromiseBox';
-import { Value } from './Value';
+import { registerNetworRequest } from "./Idle";
+import { Value } from "./Value";
 
 const TIMEOUT = 10000;
 
@@ -53,6 +54,8 @@ class Request<T> {
     public constructor(getValue: () => Promise<T>, prevValue: Result<T> | null) {
         this.prevValue = prevValue;
 
+        const unregister = registerNetworRequest();
+        
         const valuePromise = send(getValue);
 
         const whenReady = new PromiseBox<void>();
@@ -67,6 +70,7 @@ class Request<T> {
             const value = await valuePromise;
             this.value.setValue(value);
             whenReady.resolve();
+            unregister();
         }, 0);
     }
 
