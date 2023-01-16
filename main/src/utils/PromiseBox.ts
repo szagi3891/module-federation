@@ -6,7 +6,7 @@ export class PromiseBox<T> {
     public readonly reject: (err: unknown) => void;
     public readonly promise: Promise<T>;
 
-    constructor() {
+    public constructor() {
         let resolve: ResolveFn<T> | null = null;
         let reject: RejectFn | null = null;
 

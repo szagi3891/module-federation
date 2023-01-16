@@ -1,5 +1,5 @@
-import { PromiseBox } from "./PromiseBox";
-import { Value } from "./Value";
+import { PromiseBox } from './PromiseBox';
+import { Value } from './Value';
 
 const TIMEOUT = 10000;
 
@@ -42,15 +42,15 @@ const send = <T>(loadValue: () => Promise<T>): Promise<Result<T>> => {
                 type: 'error'
             });
         }
-    })
-}
+    });
+};
 
 class Request<T> {
     private readonly prevValue: Result<T> | null;;
     public readonly whenReady: Promise<void>;
     private value: Value<Result<T>>;
 
-    constructor(getValue: () => Promise<T>, prevValue: Result<T> | null) {
+    public constructor(getValue: () => Promise<T>, prevValue: Result<T> | null) {
         this.prevValue = prevValue;
 
         const valuePromise = send(getValue);
@@ -97,12 +97,12 @@ export class Resource<T> {
     private request: Value<null | Request<T>>;
     private new_request: Request<T> | null = null;
 
-    constructor(loadValue: () => Promise<T>) {
+    public constructor(loadValue: () => Promise<T>) {
         this.loadValue = loadValue;
         this.request = new Value(null);
     }
 
-    get(): Result<T> {
+    public get(): Result<T> {
         const request = this.request.getValue();
 
         if (request === null) {
@@ -123,24 +123,24 @@ export class Resource<T> {
         return request.get();
     }
 
-    async clearAndWait(): Promise<void> {
+    public async clearAndWait(): Promise<void> {
         const request = new Request(this.loadValue, null);
         this.request.setValue(request);
         await request.whenReady;
     }
 
-    clear() {
+    public clear(): void {
         this.request.setValue(new Request(this.loadValue, null));
     }
 
-    async refreshAndWait(): Promise<void> {
+    public async refreshAndWait(): Promise<void> {
         const prevValue = this.get();
         const request = new Request(this.loadValue, prevValue);
         this.request.setValue(request);
         await request.whenReady;
     }
 
-    refresh() {
+    public refresh(): void {
         const prevValue = this.get();
         this.request.setValue(new Request(this.loadValue, prevValue));
     }
