@@ -123,6 +123,16 @@ export class Resource<T> {
         return request.get();
     }
 
+    public getReady(): T | null {
+        const result = this.get();
+
+        if (result.type === 'ready') {
+            return result.value;
+        }
+
+        return null;
+    }
+
     public async clearAndWait(): Promise<void> {
         const request = new Request(this.loadValue, null);
         this.request.setValue(request);

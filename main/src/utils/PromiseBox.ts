@@ -5,6 +5,7 @@ export class PromiseBox<T> {
     public readonly resolve: (value: T) => void;
     public readonly reject: (err: unknown) => void;
     public readonly promise: Promise<T>;
+    private isFull: boolean;
 
     public constructor() {
         let resolve: ResolveFn<T> | null = null;
@@ -23,9 +24,24 @@ export class PromiseBox<T> {
             throw Error('createPromiseValue - reject is null');
         }
 
-        this.resolve = resolve;
-        this.reject = reject;
+        const resolveConst: ResolveFn<T> = resolve;
+        const rejectConst: RejectFn = reject;
+
+        this.resolve = (value: T): void => {
+            resolveConst(value);
+            this.isFull = true;
+        };
+
+        this.reject = (error: unknown): void => {
+            rejectConst(error);
+            this.isFull = true;
+        };
+
+        this.isFull = false;
+    }
+
+    public isFulfilled(): boolean {
+        return this.isFull;
     }
 }
-
 
