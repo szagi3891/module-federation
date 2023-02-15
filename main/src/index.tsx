@@ -22,7 +22,7 @@ const createJsx = (setBodyFlag: boolean): React.ReactElement => {
     return <App setBody={setBodyFlag ? setBody : undefined} myCache={myCache} />
 };
     
-const fakeRoot = ReactDOM.createRoot(document.createElement('div'));
+const fakeRoot = ReactDOM.createRoot(document.createElement('html'));
 fakeRoot.render(createJsx(false));
 console.info('render fake');
 
