@@ -16,7 +16,11 @@ app.get('*', async (_req, res): Promise<void> => {
         key: 'emotion-server',
     });
 
-    const result = await renderToString(<App myCache={myCache} src='/client/main.js' />);
+    const driver = {
+        isBrowser: () => false,
+    };
+
+    const result = await renderToString(<App driver={driver} myCache={myCache} src='/client/main.js' />);
 
     res.setHeader('Content-type', 'text/html');
     res.write(`<!DOCTYPE html>`);

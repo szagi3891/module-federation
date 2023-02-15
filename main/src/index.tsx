@@ -19,7 +19,11 @@ const createJsx = (setBody: boolean): React.ReactElement => {
         }
     } : undefined;
 
-    return <App setBody={setBodyFn} myCache={myCache} />
+    const driver = {
+        isBrowser: () => true,
+    };
+
+    return <App driver={driver} setBody={setBodyFn} myCache={myCache} />
 };
     
 const fakeRoot = ReactDOM.createRoot(document.createElement('html'));

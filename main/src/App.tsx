@@ -8,6 +8,10 @@ import List from './List';
 import { ReactLazy } from "./utils/LazyComponent";
 import { timeout } from "./utils/timeout";
 
+interface EnvDriver {
+    isBrowser(): boolean;
+}
+
 const USE_TIMEOUTS = false;
 
 const Body = styled('body')`
@@ -67,12 +71,13 @@ interface PropsType {
     myCache: EmotionCache,
     setBody?: (node: HTMLElement | null) => void,
     src?: string,
+    driver: EnvDriver,
 }
 
 export const App = observer((props: PropsType) => {
     const [state] = React.useState(() => new State());
 
-    const { myCache, setBody, src } = props;
+    const { driver, myCache, setBody, src } = props;
     const script = src === undefined
         ? undefined
         : <script async data-chunk="main" src={src}></script>;
@@ -81,12 +86,15 @@ export const App = observer((props: PropsType) => {
 
     //TODO - co jeśli fallback, będzie uzywał withConfig ? Pierwszy mechanizm hydracji, powinien równie poczekać na gotowość tego elementu. Trzeba to jakoś sprawdzić lub znaleźć sposób jak to ograć
 
+    const isBrowser = driver.isBrowser();
+
     return (
         <CacheProvider value={myCache}>
             <head>
                 <title>{`Prototyp = test === counter = ${state.counter}`}</title>
             </head>
             <Body ref={setBody}>
+                { isBrowser ? 'renderowanie w przeglądarce' : 'renderowanie w serwerze' }
                 <Content state={state} />
                 {script}
             </Body>
